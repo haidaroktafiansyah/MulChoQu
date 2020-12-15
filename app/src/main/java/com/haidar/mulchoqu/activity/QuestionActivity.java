@@ -24,6 +24,7 @@ import com.haidar.mulchoqu.retrofit.ApiService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -147,8 +148,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         CountDown.start();
     }
 
-    ArrayList<String> jawaban = new ArrayList<String>();
+    private ArrayList<String> jawaban = new ArrayList<String>();
     private void shuffle_jawaban(int index){
+        jawaban.clear();
         jawaban.add(daftar_soal.get(index).getCorrectAnswer());
         jawaban.add(daftar_soal.get(index).getIncorrectAnswers().get(0));
         jawaban.add(daftar_soal.get(index).getIncorrectAnswers().get(1));
@@ -202,12 +204,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private void changeQuestion(){
         if(quesNumber < daftar_soal.size()-1){
             quesNumber++;
-
+            shuffle_jawaban(quesNumber);
             playanim(question, 0,0);
             playanim(option1, 0,1);
             playanim(option2, 0,2);
             playanim(option3, 0,3);
             playanim(option4, 0,4);
+
 
             qCount.setText(String.valueOf(quesNumber+1)+" / "+daftar_soal.size());
 
@@ -235,7 +238,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             @SuppressLint("ResourceAsColor")
             @Override
             public void onAnimationEnd(Animator animator) {
-                shuffle_jawaban(quesNumber);
+
                 if(value==0){
                     switch (viewNum){
                         case 0 :

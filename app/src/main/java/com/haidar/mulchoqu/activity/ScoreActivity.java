@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class ScoreActivity extends AppCompatActivity {
         done = findViewById(R.id.sa_done);
 
         String score_get = getIntent().getStringExtra("SCORE");
+        Log.d("test_nilai", score_get);
         score.setText(score_get);
 
         done.setOnClickListener(new View.OnClickListener() {
