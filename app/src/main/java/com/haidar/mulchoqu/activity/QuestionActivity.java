@@ -40,6 +40,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
+        score = 0;
+
         String id_kategori = getIntent().getStringExtra("id_kategori");
         getDataFromApi("https://opentdb.com/api.php?amount=20&category="+id_kategori+"&difficulty=medium&type=multiple");
 
@@ -157,6 +159,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private void checkAnswer(String userAnswer, int index,View v){
         if(userAnswer.equals(daftar_soal.get(quesNumber).getCorrectAnswer())){
             ((Button)v).setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            score++;
         }else{
             ((Button)v).setBackgroundTintList(ColorStateList.valueOf(Color.RED));
             String compare = daftar_soal.get(index).getCorrectAnswer();
@@ -194,6 +197,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    private int score;
+
     private void changeQuestion(){
         if(quesNumber < daftar_soal.size()-1){
             quesNumber++;
@@ -211,8 +216,10 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         }else{
             Intent intent = new Intent(QuestionActivity.this,ScoreActivity.class);
+            intent.putExtra("SCORE", String.valueOf(score)+"/"+String.valueOf(daftar_soal.size()));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            QuestionActivity.this.finish();
+//            QuestionActivity.this.finish();
         }
     }
 
@@ -267,5 +274,12 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             }
         })
         ;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        CountDown.cancel();
     }
 }
