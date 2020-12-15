@@ -169,7 +169,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             for(int i=0; i<4; i++){
                 if(compare.equals(jawaban.get(i))){
                     indexjawaban = i;
-                    break;
                 }
             }
             switch (indexjawaban){
