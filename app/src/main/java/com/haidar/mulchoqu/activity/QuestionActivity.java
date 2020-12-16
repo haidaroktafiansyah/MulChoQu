@@ -43,9 +43,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         score = 0;
 
-        String id_kategori = getIntent().getStringExtra("id_kategori");
-        getDataFromApi("https://opentdb.com/api.php?amount=20&category="+id_kategori+"&difficulty=medium&type=multiple");
-
         question = findViewById(R.id.qustion);
         qCount = findViewById(R.id.question_number);
         timer = findViewById(R.id.countdown);
@@ -59,6 +56,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         option2.setOnClickListener(this);
         option3.setOnClickListener(this);
         option4.setOnClickListener(this);
+
+        String id_kategori = getIntent().getStringExtra("id_kategori");
+        getDataFromApi("https://opentdb.com/api.php?amount=20&category="+id_kategori+"&difficulty=medium&type=multiple");
 
     }
 
@@ -159,7 +159,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void checkAnswer(String userAnswer, int index,View v){
-        if(userAnswer.equals(daftar_soal.get(quesNumber).getCorrectAnswer())){
+        if(userAnswer.equals(daftar_soal.get(index).getCorrectAnswer())){
             ((Button)v).setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
             score++;
         }else{
@@ -204,6 +204,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         if(quesNumber < daftar_soal.size()-1){
             quesNumber++;
             shuffle_jawaban(quesNumber);
+
             playanim(question, 0,0);
             playanim(option1, 0,1);
             playanim(option2, 0,2);
